@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Horizontal Image Train</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" >
+    <style>
+        body, html {
+            height: 100%;
+            margin: 0; /* Remove default margin */
+            padding: 0; /* Remove default padding */
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        .image-train {
+            margin-top: 10px;
+            display: flex;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .image-train.upper {
+            margin-bottom: 20px;
+        }
+
+        .image-item {
+            width: 300px;
+            height: 200px;
+            margin: 0 25px; /* Space between images */
+            flex-shrink: 0;
+            background-size: cover;
+            position: relative;
+            overflow: hidden;
+            transition: transform 5s linear;
+        }
+
+        .image-item:hover {
+            transform: scale(1.2);
+        }
+
+        .image-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        @keyframes scroll-left {
+            0% {
+                transform: translateX(0);
+            }
+            100% {
+                transform: translateX(calc(-300px * 25)); /* Adjust for number of images */
+            }
+        }
+
+        @keyframes scroll-right {
+            0% {
+                transform: translateX(0);
+            }
+            100% {
+                transform: translateX(calc(300px * 25)); /* Adjust for number of images */
+            }
+        }
+
+        .image-train.upper .image-item {
+            animation: scroll-left 75s linear infinite;
+        }
+
+        .image-train.middle .image-item {
+            animation: scroll-right 75s linear infinite;
+        }
+
+        .image-train.lower .image-item {
+            animation: scroll-left 75s linear infinite;
+        }
+
+        /* Additional style for extra smooth loop */
+        .image-train .image-item:last-child {
+            position: absolute;
+            left: 100%; /* Position it after the last image */
+            transform: translateX(-300px); /* Move it back by one image width */
+        }
+
+        .image-train .image-item:first-child {
+            position: absolute;
+            right: 100%; /* Position it before the first image */
+            transform: translateX(300px); /* Move it forward by one image width */
+        }
+
+        .wide-view {
+            display: none;
+            justify-content: center;
+            align-items: center;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            z-index: 999;
+        }
+
+        .wide-view img {
+            max-width: 90%;
+            max-height: 90%;
+        }
+
+        .return-button {
+            margin-top: 20px; /* Space at the bottom */
+            background-color: white; /* Background color set to white */
+            color: #007bff; /* Text color blue */
+            border: 1px solid #007bff; /* Blue border */
+            padding: 10px 20px;
+            cursor: pointer;
+            text-decoration: none; /* Remove underline */
+            transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+        }
+
+        .return-button:hover {
+            background-color: #007bff; /* Hover background color */
+            color: white; /* Hover text color */
+            border-color: #007bff; /* Hover border color */
+        }   
+    </style>
+</head>
+<body>
+
+<div class="image-train upper">
+    <div class="image-item" style="background-image: url('mikaan/1.jpeg')" onclick="showWideView('mikaan/1.jpeg')">
+        <img src="mikaan/1.jpeg" alt="Image 1">
+    </div>
+    <div class="image-item" style="background-image: url('mikaan/2.jpeg')" onclick="showWideView('mikaan/2.jpeg')">
+        <img src="mikaan/2.jpeg" alt="Image 2">
+    </div>
+    <div class="image-item" style="background-image: url('mikaan/3.jpg')" onclick="showWideView('mikaan/3.jpg')">
+        <img src="mikaan/3.jpeg" alt="Image 3">
+    </div>
+    <div class="image-item" style="background-image: url('mikaan/4.jpg')" onclick="showWideView('mikaan/4.jpeg')">
+        <img src="mikaan/4.jpg" alt="Image 4">
+    </div>
+    <div class="image-item" style="background-image: url('mikaan/5.jpg')" onclick="showWideView('mikaan/5.jpg')"> 
+        <img src="mikaan/5.jpg" alt="Image 5">
+    </div>
+    <div class="image-item" style="background-image: url('mikaan/6.jpg')" onclick="showWideView('mikaan/6.jpg')"> 
+        <img src="mikaan/6.jpg" alt="Image 6">
+    </div>
+    <div class="image-item" style="background-image: url('mikaan/7.jpg')" onclick="showWideView('mikaan/7.jpg')">
+        <img src="mikaan/7.jpg" alt="Image 7">
+    </div>
+    <div class="image-item" style="background-image: url('mikaan/8.jpg')" onclick="showWideView('mikaan/8.jpg')">
+        <img src="mikaan/8.jpg" alt="Image 8">
+    </div>
+    <div class="image-item" style="background-image: url('mikaan/9.jpg')" onclick="showWideView('mikaan/9.jpg')">
+        <img src="mikaan/9.jpg" alt="Image 9">
+    </div>
+    <div class="image-item" style="background-image: url('mikaan/10.jpg')" onclick="showWideView('mikaan/10.jpg')">
+        <img src="mikaan/10.jpg" alt="Image 10">
+    </div>
+    <div class="image-item" style="background-image: url('mikaan/11.jpg')" onclick="showWideView('mikaan/11.jpg')">
+        <img src="mikaan/11.jpg" alt="Image 11">
+    </div>
+    <div class="image-item" style="background-image: url('mikaan/12.jpg')" onclick="showWideView('mikaan/12.jpg')">
+        <img src="mikaan/12.jpg" alt="Image 12">
+    </div>
+    <div class="image-item" style="background-image: url('mikaan/13.jpg')" onclick="showWideView('mikaan/13.jpg')">
+        <img src="mikaan/13.jpg" alt="Image 13">
+    </div>
+    <div class="image-item" style="background-image: url('mikaan/14.jpg')" onclick="showWideView('mikaan/14.jpg')">
+        <img src="mikaan/14.jpg" alt="Image 14">
+    </div>
+    <div class="image-item" style="background-image: url('mikaan/15.jpg')" onclick="showWideView('mikaan/15.jpg')">
+        <img src="mikaan/15.jpg" alt="Image 15">
+    </div>
+    <div class="image-item" style="background-image: url('mikaan/16.jpg')" onclick="showWideView('mikaan/16.jpg')">
+        <img src="mikaan/16.jpg" alt="Image 16">
+    </div>
+    <div class="image-item" style="background-image: url('mikaan/17.jpg')" onclick="showWideView('mikaan/17.jpg')">
+        <img src="mikaan/17.jpg" alt="Image 17">
+    </div>
+    <div class="image-item" style="background-image: url('mikaan/18.jpg')" onclick="showWideView('mikaan/18.jpg')">
+        <img src="mikaan/18.jpg" alt="Image 18">
+    </div>
+    <div class="image-item" style="background-image: url('mikaan/19.jpg')" onclick="showWideView('mikaan/19.jpg')">
+        <img src="mikaan/19.jpg" alt="Image 19">
+    </div>
+    <div class="image-item" style="background-image: url('mikaan/20.jpg')" onclick="showWideView('mikaan/20.jpg')">
+        <img src="mikaan/20.jpg" alt="Image 20">
+    </div>
+    <div class="image-item" style="background-image: url('mikaan/21.jpeg')" onclick="showWideView('mikaan/21.jpg')">
+        <img src="mikaan/21.jpeg" alt="Image 21">
+    </div>
+    <div class="image-item" style="background-image: url('mikaan/22.jpg')" onclick="showWideView('mikaan/22.jpg')">
+        <img src="mikaan/22.jpg" alt="Image 22">
+    </div>
+    <div class="image-item" style="background-image: url('mikaan/23.jpg')" onclick="showWideView('mikaan/23.jpg')">
+        <img src="mikaan/23.jpg" alt="Image 23">
+    </div>
+</div>
+
+<div class="image-train middle">
+    <div class="image-item" style="background-image: url('mikaan/24.jpg')">
+        <img src="mikaan/24.jpg" alt="Image 24">
+    </div>
+    <div class="image-item" style="background-image: url('mikaan/25.jpg')">
+        <img src="mikaan/25.jpg" alt="Image 25">
+    </div>
+    <div class="image-item" style="background-image: url('mikaan/26.jpg')">
+        <img src="mikaan/26.jpg" alt="Image 26">
+    </div>
+    <div class="image-item" style="background-image: url('mikaan/27.jpg')">
+        <img src="mikaan/27.jpg" alt="Image 27">
+    </div>
+    <div class="image-item" style="background-image: url('mikaan/28.jpg')">
+        <img src="mikaan/28.jpg" alt="Image 28">
+    </div>
+    <div class="image-item" style="background-image: url('mikaan/29.jpg')">
+        <img src="mikaan/29.jpg" alt="Image 29">
+    </div>
+    <div class="image-item" style="background-image: url('mikaan/30.jpg')">
+        <img src="mikaan/30.jpg" alt="Image 30">
+    </div>
+    <div class="image-item" style="background-image: url('mikaan/31.jpg')">
+        <img src="mikaan/31.jpg" alt="Image 31">
+    </div>
+    <div class="image-item" style="background-image: url('mikaan/32.jpg')">
+        <img src="mikaan/32.jpg" alt="Image 32">
+    </div>
+    <div class="image-item" style="background-image: url('mikaan/33.jpg')">
+        <img src="mikaan/33.jpg" alt="Image 33">
+    </div>
+    <div class="image-item" style="background-image: url('mikaan/34.png')">
+        <img src="mikaan/34.png" alt="Image 34">
+    </div>
+    <div class="image-item" style="background-image: url('mikaan/35.png')">
+        <img src="mikaan/35.png" alt="Image 35">
+    </div>
+    <div class="image-item" style="background-image: url('mikaan/36.jpg')">
+        <img src="mikaan/36.jpg" alt="Image 36">
+    </div>
+    <div class="image-item" style="background-image: url('mikaan/37.png')">
+        <img src="mikaan/37.png" alt="Image 37">
+    </div>
+    <div class="image-item" style="background-image: url('mikaan/38.png')">
+        <img src="mikaan/38.png" alt="Image 38">
+    </div>
+    <div class="image-item" style="background-image: url('mikaan/39.png')">
+        <img src="mikaan/39.png" alt="Image 39">
+    </div>
+    <div class="image-item" style="background-image: url('mikaan/40.png')">
+        <img src="mikaan/40.png" alt="Image 40">
+    </div>
+    <div class="image-item" style="background-image: url('mikaan/41.png')">
+        <img src="mikaan/41.png" alt="Image 41">
+    </div>
+    <div class="image-item" style="background-image: url('mikaan/42.jpg')">
+        <img src="mikaan/42.jpg" alt="Image 42">
+    </div>
+    <div class="image-item" style="background-image: url('mikaan/43.jpg')">
+        <img src="mikaan/43.jpg" alt="Image 43">
+    </div>
+    <div class="image-item" style="background-image: url('mikaan/44.jpg')">
+        <img src="mikaan/44.jpg" alt="Image 44">
+    </div>
+    <div class="image-item" style="background-image: url('mikaan/45.jpg')">
+        <img src="mikaan/45.jpg" alt="Image 45">
+    </div>
+    <div class="image-item" style="background-image: url('mikaan/46.jpg')">
+        <img src="mikaan/46.jpg" alt="Image 46">
+    </div>
+</div>
+
+<div class="image-train lower">
+    <div class="image-item" style="background-image: url('mikaan/47.jpg')">
+        <img src="mikaan/47.jpg" alt="Image 47">
+    </div>
+    <div class="image-item" style="background-image: url('mikaan/48.jpg')">
+        <img src="mikaan/48.jpg" alt="Image 48">
+    </div>
+    <div class="image-item" style="background-image: url('mikaan/49.jpg')">
+        <img src="mikaan/49.jpg" alt="Image 49">
+    </div>
+    <div class="image-item" style="background-image: url('mikaan/50.jpg')">
+        <img src="mikaan/50.jpg" alt="Image 50">
+    </div>
+    <div class="image-item" style="background-image: url('mikaan/51.jpg')">
+        <img src="mikaan/51.jpg" alt="Image 51">
+    </div>
+    <div class="image-item" style="background-image: url('mikaan/52.png')">
+        <img src="mikaan/52.png" alt="Image 52">
+    </div>
+    <div class="image-item" style="background-image: url('mikaan/53.png')">
+        <img src="mikaan/53.png" alt="Image 53">
+    </div>
+    <div class="image-item" style="background-image: url('mikaan/54.png')">
+        <img src="mikaan/54.png" alt="Image 54">
+    </div>
+    <div class="image-item" style="background-image: url('mikaan/55.jpg')">
+        <img src="mikaan/55.jpg" alt="Image 55">
+    </div>
+    <div class="image-item" style="background-image: url('mikaan/56.jpg')">
+        <img src="mikaan/56.jpg" alt="Image 56">
+    </div>
+    <div class="image-item" style="background-image: url('mikaan/57.jpg')">
+        <img src="mikaan/57.jpg" alt="Image 57">
+    </div>
+    <div class="image-item" style="background-image: url('mikaan/58.jpg')">
+        <img src="mikaan/58.jpg" alt="Image 58">
+    </div>
+    <div class="image-item" style="background-image: url('mikaan/59.jpg')">
+        <img src="mikaan/59.jpg" alt="Image 59">
+    </div>
+    <div class="image-item" style="background-image: url('mikaan/60.jpg')">
+        <img src="mikaan/60.jpg" alt="Image 60">
+    </div>
+    <div class="image-item" style="background-image: url('mikaan/61.jpg')">
+        <img src="mikaan/61.jpg" alt="Image 61">
+    </div>
+    <div class="image-item" style="background-image: url('mikaan/62.jpg')">
+        <img src="mikaan/62.jpg" alt="Image 62">
+    </div>
+    <div class="image-item" style="background-image: url('mikaan/63.jpg')">
+        <img src="mikaan/63.jpg" alt="Image 63">
+    </div>
+    <div class="image-item" style="background-image: url('mikaan/64.jpg')">
+        <img src="mikaan/64.jpg" alt="Image 64">
+    </div>
+    <div class="image-item" style="background-image: url('mikaan/65.jpg')">
+        <img src="mikaan/65.jpg" alt="Image 65">
+    </div>
+    <div class="image-item" style="background-image: url('mikaan/66.jpg')">
+        <img src="mikaan/66.jpg" alt="Image 66">
+    </div>
+    <div class="image-item" style="background-image: url('mikaan/67.webp')">
+        <img src="mikaan/67.webp" alt="Image 67">
+    </div>
+    <div class="image-item" style="background-image: url('mikaan/68.png')">
+        <img src="mikaan/68.png" alt="Image 68">
+    </div>
+    <div class="image-item" style="background-image: url('mikaan/69.png ')">
+        <img src="mikaan/69.png" alt="Image 69">
+    </div>
+</div>
+
+<a type="button" class="return-button btn  btn-outline-primary" id="viewWishesBtn" href="tour.html">Return</a>
+
+<script>
+     function showWideView(imageSrc) {
+        const wideView = document.querySelector('.wide-view');
+        const wideViewImg = document.querySelector('#wide-view-img');
+        wideViewImg.src = imageSrc;
+        wideView.style.display = 'flex';
+    }
+
+    function hideWideView() {
+        const wideView = document.querySelector('.wide-view');
+        wideView.style.display = 'none';
+    }
+
+    // Check localStorage for background color setting
+    document.addEventListener("DOMContentLoaded", function() {
+        const storedColor = localStorage.getItem('background_color');
+        if (storedColor) {
+            document.body.style.backgroundColor = storedColor;
+        }
+    });
+</script>
+
+</body>
+</html>

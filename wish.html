@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Birthday Wishlist</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f5f5f5;
+      color: #333;
+      margin: 0;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 800px; /* Increased max-width */
+      margin: 20px auto;
+      padding: 20px;
+      border-radius: 10px;
+      background: #fff;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      position: relative; /* Added */
+    }
+
+    h1 {
+      text-align: center;
+      color: #ff6b6b;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+    }
+
+    #wishlist {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); /* Adjusted grid template columns */
+      gap: 20px;
+      justify-items: center; /* Align items to the center */
+    }
+
+    .wishlist-item {
+      width: 250px; /* Fixed width for each item */
+      background: #fff;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .wishlist-item h3 {
+      margin-top: 0;
+      color: #ff6b6b;
+    }
+
+    .wishlist-item p {
+      margin: 5px 0;
+      color: #555;
+    }
+
+    .button {
+      background-color: #ff6b6b;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      cursor: pointer;
+      border-radius: 5px;
+      margin-top: 10px;
+      display: block;
+      margin: 10px auto;
+    }
+
+    .return-button {
+      display: inline-block;
+      padding: 10px 20px;
+      border: 2px solid #ff6b6b;
+      background-color: #fff;
+      color: #ff6b6b;
+      border-radius: 5px;
+      text-decoration: none;
+      margin-top: 10px;
+      position: absolute; /* Positioned outside container */
+      left: 20px; /* Adjusted for positioning */
+      bottom: 20px; /* Adjusted for positioning */
+    }
+
+    .return-button:hover {
+      background-color: #ff6b6b;
+      color: #fff;
+    }
+
+    .form-popup {
+      display: none;
+      position: fixed;
+      bottom: 0;
+      right: 15px;
+      border: 1px solid #ccc;
+      z-index: 9;
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .form-container {
+      max-width: 300px;
+      margin: 0 auto;
+    }
+
+    .form-container input[type=text], /* Changed type to date */
+    .form-container input[type=date] {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 15px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      box-sizing: border-box;
+    }
+
+    .form-container .btn {
+      background-color: #ff6b6b;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      cursor: pointer;
+      width: 100%;
+      border-radius: 5px;
+    }
+
+    .form-container .btn.cancel {
+      background-color: #ccc;
+    }
+
+    .form-container .btn:hover,
+    .open-button:hover {
+      background-color: #ff4f4f;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>My Birthday Wishlist 🎉🎂</h1>
+    <div id="wishlist"></div>
+    <button onclick="openForm()" class="button">Make a Wish</button>
+  </div>
+
+  <div style="position: fixed; bottom: 20px; left: 20px;">
+    <a href="tour.html" class="return-button">Return</a> <!-- Moved to the bottom left -->
+  </div>
+
+  <div class="form-popup" id="myForm">
+    <form class="form-container" onsubmit="addItem(event)">
+      <h2>What`s your Wish?
+      </h2>
+      <label for="item"><b>Wish:</b></label>
+      <input type="text" placeholder="Enter item" name="item" required>
+      
+      <label for="date"><b>When:</b></label>
+      <input type="date" placeholder="Enter date" name="date" > <!-- Changed type to date -->
+
+      <button type="submit" class="btn">Add to Wishlist</button>
+      <button type="button" class="btn cancel" onclick="closeForm()">Close</button>
+    </form>
+  </div>
+
+  <script>
+    let wishlistItems = [];
+
+    function renderWishlist() {
+      const wishlistDiv = document.getElementById('wishlist');
+      wishlistDiv.innerHTML = '';
+
+      wishlistItems.forEach((item, index) => {
+        const itemElement = document.createElement('div');
+        itemElement.classList.add('wishlist-item');
+        itemElement.innerHTML = `
+          <div>
+            <h3>${item.name}</h3>
+            <p>${item.date}</p>
+          </div>
+          <button onclick="editItem(${index})" class="button">Update</button>
+          <button onclick="deleteItem(${index})" class="button">Remove</button>
+        `;
+        wishlistDiv.appendChild(itemElement);
+      });
+    }
+
+    function addItem(event) {
+      event.preventDefault();
+      const form = event.target;
+      const itemName = form.item.value;
+      const itemDate = form.date.value;
+
+      if (!itemName) {
+        alert('Don`t forget to make a wish');
+        return;
+      }
+
+      const newItem = {
+        name: itemName,
+        date: itemDate
+      };
+
+      wishlistItems.push(newItem);
+      renderWishlist();
+      form.reset();
+      saveToLocalStorage(); // Save to local storage
+    }
+
+    function editItem(index) {
+      const newName = prompt('Make a new wish');
+      const newDate = prompt('when you wanna make it happen?');
+
+      if (newName && newDate) {
+        wishlistItems[index].name = newName;
+        wishlistItems[index].date = newDate;
+        renderWishlist();
+        saveToLocalStorage(); // Save to local storage
+      }
+    }
+
+    function deleteItem(index) {
+      const confirmation = confirm('Are you sure you wanna dispose this wish :<?');
+      if (confirmation) {
+        wishlistItems.splice(index, 1);
+        renderWishlist();
+        saveToLocalStorage(); // Save to local storage
+      }
+    }
+
+    function openForm() {
+      document.getElementById("myForm").style.display = "block";
+    }
+
+    function closeForm() {
+      document.getElementById("myForm").style.display = "none";
+    }
+
+    function saveToLocalStorage() {
+      localStorage.setItem('wishlistItems', JSON.stringify(wishlistItems));
+    }
+
+    function loadFromLocalStorage() {
+      const savedItems = localStorage.getItem('wishlistItems');
+      if (savedItems) {
+        wishlistItems = JSON.parse(savedItems);
+        renderWishlist();
+      }
+    }
+
+    // Load items from localStorage on page load
+    loadFromLocalStorage();
+
+    document.addEventListener("DOMContentLoaded", function() {
+      const storedColor = localStorage.getItem('background_color');
+      if (storedColor) {
+        document.body.style.backgroundColor = storedColor;
+      }
+    });
+  </script>
+</body>
+</html>
